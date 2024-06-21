@@ -1,6 +1,6 @@
-import { AUTH_TOKEN_KEY, API_TOKEN_KEY } from "../constants/auth";
-
+import { AUTH_TOKEN_KEY, API_TOKEN_KEY } from "../constants/Auth";
 const API_URL = process.env.REACT_APP_API_URL;
+
 const getHeaders = () => {
   const headers = { 'Content-Type': 'application/json' };
   const token = localStorage.getItem(AUTH_TOKEN_KEY);
@@ -16,6 +16,7 @@ export const BaseService = {
     if (request.status >= 400) throw request;
     return request.json();
   },
+
   async post(url, data = {}, isAuth = false) {
     const headers = getHeaders();
     const request = await fetch(`${API_URL}/${url}`, {
@@ -30,6 +31,7 @@ export const BaseService = {
     }
     return request.json();
   },
+
   async put(url, data = {}) {
     const headers = getHeaders();
     const request = await fetch(`${API_URL}/${url}`, {
@@ -40,6 +42,7 @@ export const BaseService = {
     if (request.status >= 400) throw request;
     return request.json();
   },
+
   async delete(url) {
     const headers = getHeaders();
     const request = await fetch(`${API_URL}/${url}`, {

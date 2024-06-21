@@ -1,8 +1,7 @@
 import * as React from "react";
 import { BaseService } from '../services/BaseService';
-import { AUTH_TOKEN_KEY, API_TOKEN_KEY } from "../constants/auth";
 
-function SignupForm() {
+function Register() {
   const email = React.useRef("");
   React.useEffect(() => {
     email.current.focus();
@@ -55,4 +54,4 @@ function SignupForm() {
   );
 }
 
-export default SignupForm;
+export default Register;

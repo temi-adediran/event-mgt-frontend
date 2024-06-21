@@ -2,7 +2,7 @@ import * as React from "react";
 import { BaseService } from '../services/BaseService';
 import { useState, useEffect } from "react";
 
-function LoginForm() {
+function Login() {
   const email = React.useRef("");
   const [user, setUser] = useState({});
 
@@ -53,4 +53,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default Login;
