@@ -1,33 +1,35 @@
 import * as React from "react";
 import { BaseService } from '../services/BaseService';
-import { AUTH_TOKEN_KEY, API_TOKEN_KEY } from "../constants/auth";
+import { useState, useEffect } from "react";
 
-function SignupForm() {
+function LoginForm() {
   const email = React.useRef("");
-  React.useEffect(() => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
     email.current.focus();
   }, [])
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = {
       email: formData.get('email'),
       password: formData.get('password'),
-      password_confirmation: formData.get('password-confirmation'),
     };
 
     try {
-      const response = await BaseService.post(`/sign_up`, data, true)
+      const response = await BaseService.post(`/sign_in`, data, true)
       if (response.ok) {
-        // setUser(response);
+        setUser(response);
         // redirect to events page
+        // store user in state
+      } else {
+        // Handle error
       }
     } catch (error) {
       // Handle error
-      // log error to the browser as failure notice
-      console.log(error);
     }
   };
 
@@ -35,7 +37,7 @@ function SignupForm() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h1>Create Account</h1>
+        <h1>Login</h1>
 
         <label htmlFor="email">Email Address</label>
         <input ref={email} id="email" name="email" type="email" placeholder="Enter your email" />
@@ -45,14 +47,10 @@ function SignupForm() {
         <input id="password" name="password" type="password" placeholder="Enter your password" />
         <br /><br />
 
-        <label htmlFor="password-confirmation">Confirm Password</label>
-        <input id="password-confirmation" name="password-confirmation" type="password" placeholder="Confirm password" />
-        <br /><br />
-
         <button type="submit">Submit</button>
       </form>
     </div>
   );
 }
 
-export default SignupForm;
+export default LoginForm;
