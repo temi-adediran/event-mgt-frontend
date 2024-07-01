@@ -1,8 +1,10 @@
 import * as React from "react";
-import { BaseService } from '../services/BaseService';
+import { useAuth } from "../hooks/useAuth";
 
 function Register() {
   const email = React.useRef("");
+  const { login } = useAuth();
+
   React.useEffect(() => {
     email.current.focus();
   }, [])
@@ -17,19 +19,14 @@ function Register() {
       password_confirmation: formData.get('password-confirmation'),
     };
 
-    try {
-      const response = await BaseService.post(`/sign_up`, data, true)
-      if (response.ok) {
-        // setUser(response);
-        // redirect to events page
-      }
-    } catch (error) {
-      // Handle error
-      // log error to the browser as failure notice
-      console.log(error);
+    if (data.email !== "" && data.password !== "") {
+      login(data, `/sign_up`);
+      return;
+    } else {
+      alert("please provide a valid input");
+      // add form error message
     }
   };
-
 
   return (
     <div>

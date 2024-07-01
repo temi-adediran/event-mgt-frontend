@@ -1,10 +1,12 @@
-import { AUTH_TOKEN_KEY, API_TOKEN_KEY } from "../constants/Auth";
+import { AUTH_TOKEN_COOKIE, API_TOKEN_KEY } from "../constants/Auth";
+import Cookies from 'universal-cookie';
+
 const API_URL = process.env.REACT_APP_API_URL;
+const cookies = new Cookies(null, { path: "/" } );
 
 const getHeaders = () => {
   const headers = { 'Content-Type': 'application/json' };
-  const token = localStorage.getItem(AUTH_TOKEN_KEY);
-  // console.log(token);
+  const token = cookies.get(AUTH_TOKEN_COOKIE);
   if (token) headers.Authorization = `Bearer ${token}`;
   return headers;
 };
@@ -27,7 +29,7 @@ export const BaseService = {
     if (request.status >= 400) throw request;
     if (isAuth) {
       const token = request.headers.get(API_TOKEN_KEY);
-      localStorage.setItem(AUTH_TOKEN_KEY, token)
+      cookies.set(AUTH_TOKEN_COOKIE, token)
     }
     return request.json();
   },

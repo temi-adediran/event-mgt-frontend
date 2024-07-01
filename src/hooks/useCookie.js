@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+// import { AUTH_TOKEN_COOKIE } from "../constants/Auth";
 
-const useCookie = (cookieName) => {
+export const useCookie = (cookieName) => {
   const [cookieValue, setCookieValue] = useState("");
 
   useEffect(() => {
@@ -22,5 +23,8 @@ const useCookie = (cookieName) => {
   return [cookieValue, setCookie, deleteCookie];
 };
 
-// Usage in a React component
-const [username, setUsername, deleteUsername] = useCookie("username");
+// const [authToken, setAuthToken, deleteAuthToken] = useCookie(AUTH_TOKEN_COOKIE);
+
+// export const { authToken, setAuthToken, deleteAuthToken };
+
+// export const [authToken, setAuthToken, deleteAuthToken] = useCookie();

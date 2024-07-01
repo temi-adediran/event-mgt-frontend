@@ -1,35 +1,28 @@
-import * as React from "react";
-import { BaseService } from '../services/BaseService';
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 function Login() {
   const email = React.useRef("");
-  const [user, setUser] = useState({});
+  const { login } = useAuth();
 
   useEffect(() => {
     email.current.focus();
   }, [])
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
     const formData = new FormData(event.target);
     const data = {
       email: formData.get('email'),
       password: formData.get('password'),
     };
 
-    try {
-      const response = await BaseService.post(`/sign_in`, data, true)
-      if (response.ok) {
-        setUser(response);
-        // redirect to events page
-        // store user in state
-      } else {
-        // Handle error
-      }
-    } catch (error) {
-      // Handle error
+    if (data.email !== "" && data.password !== "") {
+      login(data, `/sign_in`);
+      return;
+    } else {
+      alert("please provide a valid input");
+      // add form error message
     }
   };
 
